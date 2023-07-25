@@ -243,21 +243,21 @@ class LinkedList {
     return false;
   };
 
-  reverseList = function (left, prev = null) {
-    if (!left.next) {
-      let curr = prev;
-      while (curr.next) {
-        curr = curr.next;
-      }
+  // reverseList = function (left, prev = null) {
+  //   if (!left.next) {
+  //     let curr = prev;
+  //     while (curr.next) {
+  //       curr = curr.next;
+  //     }
 
-      curr.next = left;
-      return prev;
-    }
+  //     curr.next = left;
+  //     return prev;
+  //   }
 
-    let next = left.next;
-    left.next = prev;
-    return reverseList(next, left);
-  };
+  //   let next = left.next;
+  //   left.next = prev;
+  //   return reverseList(next, left);
+  // };
 
   reverseBetween = function (left, right) {
     let leftNode = null;
@@ -339,14 +339,14 @@ function mergingTwoList(l1, l2, ans) {
 // l1.AddElement(3);
 // l1.AddElement(2);
 // l1.AddElement(0);
-let l2 = new LinkedList();
-l2.AddElement(1);
-l2.AddElement(2);
-l2.AddElement(3);
-l2.AddElement(4);
-l2.AddElement(5);
-l2.reverseBetween(2, 4);
-// let ans = new LinkedList();
+// let l2 = new LinkedList();
+// l2.AddElement(1);
+// l2.AddElement(2);
+// l2.AddElement(3);
+// l2.AddElement(4);
+// l2.AddElement(5);
+// l2.reverseBetween(2, 4);
+// // let ans = new LinkedList();
 // mergingTwoList(l1, l2, ans);
 // ans.DisplayElements();
 
@@ -539,3 +539,235 @@ l2.reverseBetween(2, 4);
 // }
 
 // console.log(isHappy(16));
+
+class ListNode {
+  constructor(value, next) {
+    this.value = value == undefined ? 0 : value;
+    this.next = next == undefined ? null : next;
+  }
+}
+
+var reverseList = function (head) {
+  if (head == null) {
+    return head;
+  }
+  let curr = head;
+  let nextNode = null;
+  let prev = null;
+  while (curr.next) {
+    nextNode = curr.next;
+    curr.next = prev;
+    prev = curr;
+    curr = nextNode;
+  }
+
+  curr.next = prev;
+  console.log(prev);
+  return curr;
+};
+
+// removeKthNode = function (head, k) {
+//   let curr = head;
+//   let prev = null;
+//   let count = 1;
+//   while (count < k) {
+//     prev = curr;
+//     curr = curr.next;
+//     count++;
+//   }
+
+//   prev.next = curr.next;
+//   return head;
+// };
+
+// var reverseList = function (head) {
+//   let curr = head;
+//   let forward = head;
+//   let prev = null;
+//   while (curr) {
+//     forward = forward.next;
+//     curr.next = prev;
+//     prev = curr;
+//     curr = forward;
+//   }
+
+//   return prev;
+// };
+
+// var reverseKGroup = function (head, k) {
+//   let prev = null;
+//   return reverse(head, prev, k);
+// };
+
+// function length(head) {
+//   let len = 0;
+//   let curr = head;
+//   while (curr) {
+//     len++;
+//     curr = curr.next;
+//   }
+//   return len;
+// }
+
+// function reverse(head, prev, k) {
+//   if (k == 0) {
+//     return head;
+//   }
+//   let curr = head;
+//   let forward = head;
+//   let count = 0;
+//   while (curr && count < k) {
+//     forward = forward.next;
+//     curr.next = prev;
+//     prev = curr;
+//     curr = forward;
+//     count += 1;
+//   }
+
+//   let app = prev;
+//   while (app.next) {
+//     app = app.next;
+//   }
+//   app.next = forward;
+//   return reverse(forward, null, (k = k - 1));
+// }
+
+var swapPairs = function (head) {
+  let dummy = new Node(0);
+  dummy.next = head;
+  let groupPrev = dummy;
+
+  if (head == null) {
+    return null;
+  }
+
+  if (head.next == null) {
+    return head;
+  }
+
+  while (true) {
+    let alterN = alternateNode(groupPrev, 2);
+    if (!alterN) {
+      break;
+    }
+
+    let groupNext = alterN.next;
+
+    let prev = alterN.next;
+    let curr = groupPrev.next;
+
+    while (curr != groupNext) {
+      let temp = curr.next;
+      curr.next = prev;
+      prev = curr;
+      curr = temp;
+    }
+
+    let temp = groupPrev.next;
+    groupPrev.next = alterN;
+    groupPrev = temp;
+  }
+
+  return dummy.next;
+};
+
+function alternateNode(node, k) {
+  let curr = node;
+  while (curr && k > 0) {
+    curr = curr.next;
+    k -= 1;
+  }
+  return curr;
+}
+
+var swapNodes = function (head, k) {
+  let length = len(head);
+  let dummy = new ListNode(0, head);
+
+  let node1 = kthNodeFromStart(dummy, k);
+  let node2 = kthNodeFromEnd(dummy, length - k);
+
+  swap(node1, node2);
+
+  return dummy.next;
+};
+
+function kthNodeFromStart(node, k) {
+  let curr = node;
+  while (curr && k > 0) {
+    curr = curr.next;
+    k -= 1;
+  }
+  return node;
+}
+
+function kthNodeFromEnd(node, k) {
+  let curr = node;
+  while (curr && k > 0) {
+    curr = curr.next;
+    k -= 1;
+  }
+  return node;
+}
+
+function swap(node1, node2) {
+  let temp = node1.val;
+  node1.val = node2.val;
+  node2.val = temp;
+  console.log(`node1 : ${node1.val}, node2 : ${node2.val}`);
+}
+
+function len(head) {
+  let curr = head;
+  let len = 0;
+  while (curr) {
+    curr = curr.next;
+    len += 1;
+  }
+  return len;
+}
+
+var removeNthFromEnd = function (head, n) {
+  if (head == null) {
+    return null;
+  }
+
+  let len = length(head);
+
+  //let dummy = new ListNode(0,head);
+  findKthNode(head, len - n);
+  return head;
+};
+
+function findKthNode(node, n) {
+  let prev = null;
+  let curr = node;
+  while (curr && n > 0) {
+    prev = curr;
+    curr = curr.next;
+    n -= 1;
+  }
+
+  prev.next = curr.next;
+}
+
+function length(node) {
+  let len = 0;
+  let curr = node;
+  while (curr) {
+    curr = curr.next;
+    len += 1;
+  }
+  return len;
+}
+
+let list = new LinkedList();
+list.AddElement(1);
+list.AddElement(2);
+list.AddElement(3);
+list.AddElement(4);
+list.AddElement(5);
+//console.log(reverseList(list.head));
+//console.log(list.DisplayElements());
+//console.log(removeKthNode(list.head, 4));
+console.log(removeNthFromEnd(list.head, 2));

@@ -428,27 +428,121 @@ console.log(Rotate(arr));
 // }
 
 // console.log(check([3, 4, 5, 1, 2]));
-function subArrayCal(arr) {
-  let count = 0;
-  for (let i = 0; i < arr.length; i++) {
-    let sum = 0;
-    sum = arr[i];
+// function subArrayCal(arr) {
+//   let count = 0;
+//   for (let i = 0; i < arr.length; i++) {
+//     let sum = 0;
+//     sum = arr[i];
 
-    if (arr[i] == 0) {
-      count += 1;
-    }
+//     if (arr[i] == 0) {
+//       count += 1;
+//     }
 
-    let j = i + 1;
-    while (j < arr.length) {
-      sum += arr[j];
-      if (sum == 0) {
-        count += 1;
-      }
-      j++;
-    }
+//     let j = i + 1;
+//     while (j < arr.length) {
+//       sum += arr[j];
+//       if (sum == 0) {
+//         count += 1;
+//       }
+//       j++;
+//     }
+//   }
+
+//   return count;
+// }
+
+// console.log(subArrayCal([1, 0, -1, 1]));
+
+// var getAverages = function (nums, k) {
+//   let digits = 2 * k + 1;
+//   let start = k;
+//   let sum = 0;
+//   let left = start - k;
+//   let right = 0;
+//   let output = new Array();
+//   output.fill(-1);
+//   while (right < nums.length) {
+//     if (right > start + k) {
+//       sum -= nums[left];
+//       output[start++] = Math.floor(sum / digits);
+//       left = left + 1;
+//       sum += nums[right];
+//     } else {
+//       sum += nums[right];
+//     }
+//     right++;
+//   }
+
+//   return output;
+// };
+
+// console.log(getAverages([7, 4, 3, 9, 1, 8, 5, 2, 6], 3));
+
+// var subarraySum = function (nums, k) {
+//   let map = {};
+//   let i = 0;
+//   let prefix = 0;
+//   let count = 0;
+//   map[0] = 1;
+//   while (i < nums.length) {
+//     prefix += nums[i];
+//     let rem = prefix - k;
+//     if (map[prefix] == null) {
+//       map[prefix] = 1;
+//     } else {
+//       map[prefix] += 1;
+//     }
+//     if (map[rem] != null) {
+//       count += map[rem];
+//     }
+
+//     i++;
+//   }
+
+//   return count;
+// };
+
+// console.log(subarraySum([1, 2, 3, -3, 1, 1, 1, 4, 2, -3], 3));
+
+// var checkSubarraySum = function (nums, k) {
+//   let map = {};
+//   let i = 0;
+//   while (i < nums.length) {
+//     if (map[nums[i] % k] != null) {
+//       let index = map[nums[i] % k];
+//       console.log(`i : ${i} index : ${index}`);
+//       let diff = i - index;
+//       console.log(diff);
+//       if (diff > 1) {
+//         return true;
+//       }
+//     } else {
+//       map[nums[i] % k] = i;
+//     }
+//     i++;
+//   }
+//   return false;
+// };
+
+// console.log(checkSubarraySum([23, 2, 4, 6, 7], 6));
+
+var merge = function (nums1, m, nums2, n) {
+  let A = m - 1;
+  let B = n - 1;
+
+  if (A < 0) {
+    nums1 = [...nums2];
   }
 
-  return count;
-}
+  for (let i = m + n - 1; i > 0; i--) {
+    if (nums1[A] < nums2[B]) {
+      nums1[i] = nums2[B];
+      B--;
+    } else {
+      nums1[i] = nums1[A];
+      A--;
+    }
+  }
+};
 
-console.log(subArrayCal([1, 0, -1, 1]));
+console.log(merge([], 0, [1], 1));
