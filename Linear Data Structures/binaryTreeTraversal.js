@@ -422,18 +422,324 @@ function Helper(root) {
   }
 }
 
-let root = new Node(0);
-root.left = new Node(2);
-root.right = new Node(4);
-root.left.left = new Node(1);
-root.left.right = new Node(null);
-root.right.left = new Node(3);
-root.right.right = new Node(-1);
-root.left.left.left = new Node(5);
-root.left.left.right = new Node(1);
-root.right.left.left = new Node(null);
-root.right.left.right = new Node(6);
-root.right.right.left = new Node(null);
-root.right.right.right = new Node(8);
+// let root = new Node(1);
+// root.left = null;
+// root.right = new Node(2);
+// root.right.left = new Node(3);
+// root.right.right = null;
+// //flatten(root);
 
-flatten(root);
+var inorderTraversal = function (root) {
+  let arr = [];
+  if (root == null) {
+    return arr;
+  }
+  inOrderTra(root, arr);
+  return arr;
+};
+
+function inOrderTra(root, arr) {
+  if (root != null) {
+    inOrderTra(root.left, arr);
+    arr.push(root.val);
+    inOrderTra(root.right, arr);
+  }
+}
+
+//console.log(inorderTraversal(root));
+
+// function pathSum(root, targetSum) {
+//   return dfs(root, targetSum, []);
+// }
+
+// function dfs(root, targetSum, currentPath) {
+//   if (!root) return 0;
+
+//   // add current node to path
+//   currentPath.push(root.val);
+//   let count = 0;
+//   let sum = 0;
+
+//   // calculate sum for current path
+//   // we start from last added element
+//   // to avoid calculating same path twice
+//   for (let i = currentPath.length - 1; i >= 0; i--) {
+//     sum = sum + currentPath[i];
+//     if (sum === targetSum) count++;
+//   }
+
+//   // continue for left and right sub trees
+//   count += dfs(root.left, targetSum, currentPath);
+//   count += dfs(root.right, targetSum, currentPath);
+
+//   // remove the current node from current path
+//   // because we want to traverse a different path that
+//   // doesn't have this node in it
+//   currentPath.pop();
+//   return count;
+// }
+
+// var pathSum = function (root, targetSum) {
+//   let map = new Map();
+//   map.set(0, 1);
+
+//   function dfs(root, targetSum, sum) {
+//     if (!root) return 0;
+//     let count = 0;
+
+//     sum += root.val;
+
+//     if (!map.has(sum - targetSum)) {
+//       map.set(sum, map.has(sum) ? map.get(sum) + 1 : 1);
+//     } else {
+//       count += map.get(sum - targetSum);
+//     }
+
+//     count += dfs(root.left, targetSum, sum);
+//     count += dfs(root.right, targetSum, sum);
+//     map.set(sum - targetSum, map.get(sum - targetSum) - 1);
+
+//     return count;
+//   }
+
+//   return dfs(root, targetSum, 0);
+// };
+
+// let root = new Node(10);
+// root.left = new Node(5);
+// root.left.left = new Node(3);
+// root.left.left.left = new Node(3);
+// root.left.left.right = new Node(-2);
+// root.left.right = new Node(2);
+// root.left.right.right = new Node(1);
+// root.right = new Node(-3);
+// root.right.right = new Node(11);
+
+// // let root = new Node(1);
+// // root.left = new Node(-2);
+// // root.right = new Node(-3);
+
+// console.log(pathSum(root, 8));
+
+// var isValidBST = function (root) {
+//   if (!root) {
+//     return false;
+//   }
+
+//   return validateRecur(root, true);
+// };
+
+// function validateRecur(root, isValid) {
+//   if (root.left != null && root.right != null) {
+//     if (root.left.val <= root.val && root.right.val >= root.val) {
+//       isValid = validateRecur(root.left, true);
+//       if (isValid) isValid = validateRecur(root.right, true);
+//     } else {
+//       return false;
+//     }
+//   }
+//   return isValid;
+// }
+
+// var kthSmallest = function (root, k) {
+//   let arr = [];
+//   inOrderTraversal(root, arr);
+//   return arr[k - 1];
+// };
+
+// function inOrderTraversal(root, arr) {
+//   if (root) {
+//     inOrderTraversal(root.left, arr);
+//     arr.push(root.val);
+//     inOrderTraversal(root.right, arr);
+//   }
+// }
+
+var kthSmallest = function (root, k) {
+  let arr = [];
+  inOrderTraversalIterative(root, arr);
+  return arr[k - 1];
+};
+
+// function inOrderTraversal(root, arr) {
+//     if (root) {
+//         inOrderTraversal(root.left, arr);
+//         arr.push(root.val);
+//         inOrderTraversal(root.right, arr);
+//     }
+// }
+
+// class Stack {
+//   constructor() {
+//     this.arr = [];
+//     this.top = -1;
+//   }
+
+//   isEmpty() {
+//     if (this.top == -1) {
+//       return true;
+//     }
+//     return false;
+//   }
+
+//   push(val) {
+//     this.arr.push(val);
+//     this.top += 1;
+//   }
+
+//   pop() {
+//     if (this.top >= 0) {
+//       let poppedEle = this.arr.pop();
+//       this.top -= 1;
+//       return poppedEle;
+//     } else {
+//       return null;
+//     }
+//   }
+// }
+
+// function inOrderTraversalIterative(root, arr) {
+//   let s = new Stack();
+//   while (root != null || !s.isEmpty()) {
+//     if (root != null) {
+//       s.push(root);
+//       root = root.left;
+//     } else {
+//       root = s.pop();
+//       arr.push(root.val);
+//       root = root.right;
+//     }
+//   }
+// }
+
+// let root = new Node(3);
+// root.left = new Node(1);
+// root.right = new Node(4);
+// root.left.right = new Node(2);
+
+// console.log(kthSmallest(root));
+
+// var maxDepth = function (root) {
+//   let max = -100;
+//   function recursion(root, total) {
+//     if (!root) {
+//       return total;
+//     }
+
+//     depthLeft = recursion(root.left, total + 1);
+//     max = Math.max(max, depthLeft);
+//     depthRight = recursion(root.right, total + 1);
+//     max = Math.max(max, depthRight);
+//     return max;
+//   }
+//   recursion(root, 0);
+//   return max;
+// };
+
+// let root = new Node(1);
+// root.left = new Node(2);
+// root.right = new Node(3);
+// root.left.right = new Node(5);
+// root.left.left = new Node(4);
+
+//console.log(maxDepth(root));
+
+// var deleteNode = function (root, key) {
+//   Helper(root, key);
+//   return root;
+// };
+
+// function Helper(root, key) {
+//   if (root == null) {
+//     return root;
+//   }
+
+//   if (key === root.val) {
+//     console.log(`key is : ${key}`);
+//     let mNode = minNode(root.right);
+//     root.val = mNode.val;
+//     root.right = deleteNodeToBo(root.right, mNode.val);
+//     return root;
+//   }
+
+//   if (key < root.val) {
+//     return Helper(root.left, key);
+//   } else if (key > root.val) {
+//     return Helper(root.right, key);
+//   }
+// }
+
+// function deleteNodeToBo(root, nodeToBeDeleted) {
+//   if (root.val == nodeToBeDeleted) {
+//     root = null;
+//     return;
+//   }
+//   return deleteNodeToBo(root.left, nodeToBeDeleted);
+// }
+
+// function minNode(root) {
+//   console.log(root.val);
+//   if (root.left == null) {
+//     return root;
+//   }
+
+//   return minNode(root.left);
+// }
+
+// let root = new Node(5);
+// root.right = new Node(6);
+// root.left = new Node(3);
+// root.left.left = new Node(2);
+// root.left.right = new Node(4);
+// root.right.right = new Node(7);
+
+// console.log(deleteNode(root, 3));
+
+// function build_maxheap(arr) {
+//   for (let i = Math.floor(arr.length / 2); i >= 1; i--) {
+//     max_heapify(arr, i, arr.length);
+//   }
+//   return arr;
+// }
+
+// function max_heapify(arr, i, n) {
+//   let left = 2 * i; //left child
+//   let right = 2 * i + 1; //right child
+//   if (left <= n && arr[left] > arr[i]) largest = left;
+//   else largest = i;
+//   if (right <= n && arr[right] > arr[largest]) largest = right;
+//   if (largest != i) {
+//     let temp = arr[i];
+//     arr[i] = arr[largest];
+//     arr[largest] = temp;
+//     max_heapify(arr, largest, n);
+//   }
+// }
+
+// console.log(build_maxheap([3, 2, 5, 6, 1, 4]));
+
+class Priority {
+  maximum(arr) {
+    return arr[1]; //o(n);
+  }
+
+  max_heapify(arr, i, n) {
+    let left = 2 * i;
+    let right = 2 * i + 1;
+    if (left <= n && arr[left] >= arr[i]) largest = left;
+    else largest = i;
+    if (right <= n && arr[right] >= arr[largest]) largest = right;
+    if (largest != i) {
+      let temp = arr[largest];
+      arr[largest] = arr[i];
+      arr[i] = temp;
+      this.max_heapify(arr, largest, n);
+    }
+  }
+
+  extractMaximum(arr) {
+    if (arr.length == 0) {
+      console.log("tree is empty");
+    }
+  }
+}

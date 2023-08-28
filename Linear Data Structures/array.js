@@ -526,23 +526,80 @@ console.log(Rotate(arr));
 
 // console.log(checkSubarraySum([23, 2, 4, 6, 7], 6));
 
-var merge = function (nums1, m, nums2, n) {
-  let A = m - 1;
-  let B = n - 1;
+// var merge = function (nums1, m, nums2, n) {
+//   let A = m - 1;
+//   let B = n - 1;
 
-  if (A < 0) {
-    nums1 = [...nums2];
-  }
+//   if (A < 0) {
+//     nums1 = [...nums2];
+//   }
 
-  for (let i = m + n - 1; i > 0; i--) {
-    if (nums1[A] < nums2[B]) {
-      nums1[i] = nums2[B];
-      B--;
-    } else {
-      nums1[i] = nums1[A];
-      A--;
-    }
-  }
+//   for (let i = m + n - 1; i > 0; i--) {
+//     if (nums1[A] < nums2[B]) {
+//       nums1[i] = nums2[B];
+//       B--;
+//     } else {
+//       nums1[i] = nums1[A];
+//       A--;
+//     }
+//   }
+// };
+
+// console.log(merge([], 0, [1], 1));
+
+var findMin = function (nums) {
+  let min = nums[0];
+  return binarySearch(0, nums.length - 1, nums, min);
 };
 
-console.log(merge([], 0, [1], 1));
+function binarySearch(low, high, nums, min) {
+  let mid = Math.floor(low + (high - low) / 2);
+  min = Math.min(nums[mid], min);
+  if (low < high) {
+    if (nums[mid - 1] > nums[mid] && nums[mid] < nums[mid + 1]) {
+      return mid;
+    } else if (nums[mid] > nums[high]) {
+      return binarySearch(mid + 1, high, nums, min);
+    } else {
+      if (nums[mid] > nums[mid + 1]) {
+        return binarySearch(mid + 1, high, nums, min);
+      } else {
+        return binarySearch(low, mid, nums, min);
+      }
+    }
+  } else {
+    return min;
+  }
+}
+
+//console.log(findMin([2, 2, 2, 0, 1]));
+
+var minPathSum = function (grid) {
+  let m = grid[0];
+  let firstRowSum = m.reduce((acc, crr) => acc + crr, 0);
+
+  m = grid[grid.length - 1];
+  let lastRowSum = m.reduce((acc, crr) => acc + crr, 0);
+
+  let i = 1;
+  while (i < grid.length) {
+    firstRowSum += grid[i][grid[i].length - 1];
+    i++;
+  }
+
+  let j = 0;
+  while (j < grid.length - 1) {
+    lastRowSum += grid[j][0];
+    j++;
+  }
+
+  return Math.min(firstRowSum, lastRowSum);
+};
+
+console.log(
+  minPathSum([
+    [1, 3, 1],
+    [1, 5, 1],
+    [4, 2, 1],
+  ])
+);
