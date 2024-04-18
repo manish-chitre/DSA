@@ -46,6 +46,8 @@ class Dequeue {
     }
   }
 
+  
+
   removeRear() {
     if (this.isEmpty()) {
       console.log("queue is empty");

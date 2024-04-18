@@ -68,7 +68,7 @@
 // }
 
 // let arr = [2, 6, 5, 3, 8, 7, 1, 0];
-// console.log(quickSort(arr, 0, 7));
+//console.log(quickSort(arr, 0, 7));
 // console.log(arr);
 
 // function mergeSort();
